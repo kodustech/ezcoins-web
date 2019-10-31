@@ -1,19 +1,14 @@
 import React, { memo } from "react";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import Header from "./Header";
 import Home from "../pages/Home";
 
 const Routes = memo(() => {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-          </ul>
-        </nav>
+        <Header />
 
         <Switch>
           <Route path="/">
