@@ -9,9 +9,11 @@ const Routes = memo(() => {
     <Router>
       <div>
         <Header />
-
         <Switch>
           <Route path="/">
+            <Home />
+          </Route>
+          <Route path="/login">
             <Home />
           </Route>
         </Switch>
