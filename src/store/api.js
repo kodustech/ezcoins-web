@@ -23,10 +23,10 @@ export default () => {
 
     const retryLink = new RetryLink();
     const httpLink = createHttpLink({
-      uri: `https://5a6ac1f2.ngrok.io`,
+      uri: `http://${process.env.REACT_APP_API_URL}/graphql`,
     });
 
-    const wsClient = new SubscriptionClient(`wss://5a6ac1f2.ngrok.io`, {
+    const wsClient = new SubscriptionClient(`wss://${process.env.REACT_APP_API_URL}/graphql`, {
       reconnect: true,
     });
     const webSocketLink = new WebSocketLink(wsClient);
