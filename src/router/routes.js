@@ -1,24 +1,25 @@
 import React, { memo } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 
 import Header from './Header';
-import Home from '../pages/Home';
+import Login from '../pages/Login';
+import WithAuthRoute from './WithAuthRoute';
 
 const Routes = memo(() => {
   return (
-    <Router>
+    <BrowserRouter>
       <div>
         <Header />
         <Switch>
-          <Route path="/">
-            <Home />
-          </Route>
-          <Route path="/login">
-            <Home />
-          </Route>
+          <WithAuthRoute path="/home">
+            <div>Logged</div>
+          </WithAuthRoute>
+          <WithAuthRoute notAuthenticated path="/login">
+            <Login />
+          </WithAuthRoute>
         </Switch>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 });
 
