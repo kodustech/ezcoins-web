@@ -5,16 +5,36 @@
     "allowImportExportEverywhere": false,
     "codeFrame": false
   },
-  "extends": ["airbnb", "prettier"],
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
   "env": {
     "browser": true,
     "jest": true
   },
   "rules": {
-    "max-len": ["error", {"code": 100}],
-    "prefer-promise-reject-errors": ["off"],
-    "react/jsx-filename-extension": ["off"],
+    "max-len": [
+      "error",
+      {
+        "code": 100
+      }
+    ],
+    "prefer-promise-reject-errors": [
+      "off"
+    ],
+    "react/jsx-filename-extension": [
+      "off"
+    ],
     "react/jsx-props-no-spreading": 0,
+    "no-bitwise": [
+      "error",
+      {
+        "allow": [
+          "^"
+        ]
+      }
+    ],
     "react/prop-types": [
       "error",
       {
@@ -23,6 +43,8 @@
         ]
       }
     ],
-    "no-return-assign": ["off"]
+    "no-return-assign": [
+      "off"
+    ]
   }
 }
