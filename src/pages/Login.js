@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import gql from 'graphql-tag';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
 
 import { useMutation } from '@apollo/react-hooks';
 import source from '../assets/images/bg-login.png';
@@ -15,6 +16,9 @@ const LOGIN = gql`
   mutation($input: AuthInputType) {
     login(input: $input) {
       token
+      user {
+        email
+      }
     }
   }
 `;
@@ -50,6 +54,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SpacingGrid() {
   const classes = useStyles();
+  const history = useHistory();
 
   const [login] = useMutation(LOGIN);
 
@@ -71,7 +76,13 @@ export default function SpacingGrid() {
   });
 
   const onSubmit = useCallback(async input => {
-    await login({ variables: { input } });
+    const {
+      data: {
+        login: { token },
+      },
+    } = await login({ variables: { input } });
+    await localStorage.setItem('token', token);
+    history.push('/home');
   }, []);
 
   const { handleSubmit, handleChange, values } = useFormik({
