@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
-import Header from './Header';
-import Login from '../pages/Login';
 import WithAuthRoute from './WithAuthRoute';
+import Header from '../components/Header';
+import Login from '../pages/Login';
 
 const Routes = memo(() => {
   return (
@@ -11,11 +11,22 @@ const Routes = memo(() => {
       <div>
         <Header />
         <Switch>
-          <WithAuthRoute path="/home">
-            <div>Logged</div>
-          </WithAuthRoute>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <Redirect
+                to={{
+                  pathname: 'login',
+                }}
+              />
+            )}
+          />
           <WithAuthRoute notAuthenticated path="/login">
             <Login />
+          </WithAuthRoute>
+          <WithAuthRoute path="/home">
+            <div>Logged</div>
           </WithAuthRoute>
         </Switch>
       </div>
