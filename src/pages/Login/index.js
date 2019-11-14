@@ -1,5 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { memo, useCallback, useMemo } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -8,9 +7,10 @@ import gql from 'graphql-tag';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
-
 import { useMutation } from '@apollo/react-hooks';
-import source from '../assets/images/bg-login.png';
+
+import source from '../../assets/images/bg-login.png';
+import useStyles from './useStyles';
 
 const LOGIN = gql`
   mutation($input: AuthInputType) {
@@ -23,36 +23,7 @@ const LOGIN = gql`
   }
 `;
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    height: '100vh',
-  },
-  image: {
-    height: '90vh',
-  },
-  paper: {
-    margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  title: {
-    marginBottom: '30px',
-  },
-}));
-
-export default function SpacingGrid() {
+const Login = memo(() => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -97,7 +68,7 @@ export default function SpacingGrid() {
         <Grid item xs={12} sm={8} md={4}>
           <div className={classes.paper}>
             <Typography variant="h4" color="textSecondary" className={classes.title}>
-              Bem vindo ao
+              Bem Vindo ao
             </Typography>
             <Typography variant="h2" className={classes.title}>
               ez.coins
@@ -147,4 +118,6 @@ export default function SpacingGrid() {
       </Grid>
     </Grid>
   );
-}
+});
+
+export default Login;
