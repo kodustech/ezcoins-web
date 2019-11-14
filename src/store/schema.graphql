@@ -22,6 +22,7 @@ type RootMutationType {
   createUser(input: UserInputType!): UserType
   donate(input: DonationInputType!): DonationType
   login(input: AuthInputType!): AuthType
+  logout: Boolean
 }
 
 type RootQueryType {
