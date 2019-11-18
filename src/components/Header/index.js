@@ -69,6 +69,10 @@ const Header = memo(() => {
     history.push('/login');
   }, [closeMenu]);
 
+  const gotoHistory = useCallback(() => {
+    history.push('/history');
+  }, []);
+
   const menuId = useMemo(() => 'primary-search-account-menu', []);
 
   const mobileMenuId = useMemo(() => 'primary-search-account-menu-mobile', []);
@@ -83,7 +87,9 @@ const Header = memo(() => {
             </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <Button color="inherit">Histórico</Button>
+              <Button color="inherit" onClick={gotoHistory}>
+                Histórico
+              </Button>
               <Button color="inherit">Doar</Button>
               <Chip
                 className={classes.profileContainer}
@@ -92,9 +98,7 @@ const Header = memo(() => {
                 deleteIcon={
                   <div className={classes.profile}>
                     <Badge badgeContent={8} overlap="circle" color="secondary">
-                      <Avatar alt="" src={avatar}>
-                        A
-                      </Avatar>
+                      <Avatar src={avatar}>A</Avatar>
                     </Badge>
                   </div>
                 }

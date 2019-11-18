@@ -3,6 +3,8 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import WithAuthRoute from './WithAuthRoute';
 import Header from '../components/Header';
+
+import History from '../pages/History';
 import Login from '../pages/Login';
 
 const Routes = memo(() => {
@@ -27,6 +29,9 @@ const Routes = memo(() => {
           </WithAuthRoute>
           <WithAuthRoute path="/home">
             <div>Logged</div>
+          </WithAuthRoute>
+          <WithAuthRoute path="/history">
+            <History />
           </WithAuthRoute>
         </Switch>
       </div>
