@@ -4,6 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import WithAuthRoute from './WithAuthRoute';
 import Header from '../components/Header';
 
+import Donate from '../pages/Donate';
 import History from '../pages/History';
 import Login from '../pages/Login';
 
@@ -32,6 +33,9 @@ const Routes = memo(() => {
           </WithAuthRoute>
           <WithAuthRoute path="/history">
             <History />
+          </WithAuthRoute>
+          <WithAuthRoute path="/donate">
+            <Donate />
           </WithAuthRoute>
         </Switch>
       </div>
