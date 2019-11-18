@@ -67,11 +67,26 @@ const Header = memo(() => {
     await logoutMutation();
     closeMenu();
     history.push('/login');
-  }, [closeMenu]);
+  }, [closeMenu, history, logoutMutation]);
+
+  const gotoHistory = useCallback(() => {
+    history.push('/history');
+  }, [history]);
 
   const menuId = useMemo(() => 'primary-search-account-menu', []);
 
   const mobileMenuId = useMemo(() => 'primary-search-account-menu-mobile', []);
+
+  const renderDeleteIcon = useMemo(
+    () => (
+      <div className={classes.profile}>
+        <Badge badgeContent={8} overlap="circle" color="secondary">
+          <Avatar src={avatar}>A</Avatar>
+        </Badge>
+      </div>
+    ),
+    [classes.profile],
+  );
 
   return (
     isAuthenticated && (
@@ -83,21 +98,15 @@ const Header = memo(() => {
             </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <Button color="inherit">Histórico</Button>
+              <Button color="inherit" onClick={gotoHistory}>
+                Histórico
+              </Button>
               <Button color="inherit">Doar</Button>
               <Chip
                 className={classes.profileContainer}
                 label="EZȻ 50,00"
                 onDelete={openProfileMenu}
-                deleteIcon={
-                  <div className={classes.profile}>
-                    <Badge badgeContent={8} overlap="circle" color="secondary">
-                      <Avatar alt="" src={avatar}>
-                        A
-                      </Avatar>
-                    </Badge>
-                  </div>
-                }
+                deleteIcon={renderDeleteIcon}
               />
             </div>
             <div className={classes.sectionMobile}>

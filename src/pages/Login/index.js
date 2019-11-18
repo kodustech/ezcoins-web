@@ -46,15 +46,18 @@ const Login = memo(() => {
       .required(),
   });
 
-  const onSubmit = useCallback(async input => {
-    const {
-      data: {
-        login: { token },
-      },
-    } = await login({ variables: { input } });
-    await localStorage.setItem('token', token);
-    history.push('/home');
-  }, []);
+  const onSubmit = useCallback(
+    async input => {
+      const {
+        data: {
+          login: { token },
+        },
+      } = await login({ variables: { input } });
+      await localStorage.setItem('token', token);
+      history.push('/home');
+    },
+    [history, login],
+  );
 
   const { handleSubmit, handleChange, values } = useFormik({
     onSubmit,
