@@ -69,6 +69,10 @@ const Header = memo(() => {
     history.push('/login');
   }, [closeMenu, history, logoutMutation]);
 
+  const gotoDonate = useCallback(() => {
+    history.push('/donate');
+  }, [history]);
+
   const gotoHistory = useCallback(() => {
     history.push('/history');
   }, [history]);
@@ -101,7 +105,9 @@ const Header = memo(() => {
               <Button color="inherit" onClick={gotoHistory}>
                 Histórico
               </Button>
-              <Button color="inherit">Doar</Button>
+              <Button color="inherit" onClick={gotoDonate}>
+                Doar
+              </Button>
               <Chip
                 className={classes.profileContainer}
                 label="EZȻ 50,00"

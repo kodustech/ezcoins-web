@@ -1,60 +1,54 @@
 # This file was generated based on ".graphqlconfig". Do not edit manually.
 
 schema {
-  query: RootQueryType
-  mutation: RootMutationType
+    query: RootQueryType
+    mutation: RootMutationType
 }
 
 type AuthType {
-  token: String
-  user: UserType
+    token: String
+    user: UserType
 }
 
 type DonationType {
-  id: ID
-  quantity: Int
-  reason: String
-  receiver: UserType
-  sender: UserType
+    donateAt: String
+    id: ID
+    quantity: Int
+    reason: String
+    receiver: UserType
+    sender: UserType
 }
 
 type RootMutationType {
-  createUser(input: UserInputType!): UserType
-  donate(input: DonationInputType!): DonationType
-  login(input: AuthInputType!): AuthType
-  logout: Boolean
+    createUser(input: UserInputType!): UserType
+    donate(input: DonationInputType!): DonationType
+    login(input: AuthInputType!): AuthType
 }
 
 type RootQueryType {
-  donations: [DonationType]
-  users: [UserType]
+    donations: [DonationType]
+    users(exceptMe: Boolean): [UserType]
 }
 
 type UserType {
-  email: String
-  id: ID
-  wallet: WalletType
-}
-
-type WalletType {
-  balance: Int
-  received: Int
-  toOffer: Int
+    email: String
+    id: ID
 }
 
 input AuthInputType {
-  email: String!
-  password: String!
+    email: String!
+    password: String!
 }
 
 input DonationInputType {
-  quantity: Int
-  reason: String
-  receiverUserId: Int
+    donateAt: String
+    quantity: Int
+    reason: String
+    receiverUserId: ID
 }
 
 input UserInputType {
-  email: String!
-  password: String!
-  passwordConfirmation: String!
+    email: String!
+    password: String!
+    passwordConfirmation: String!
 }
