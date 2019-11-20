@@ -1,7 +1,7 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
+import DateFnsUtils from '@date-io/date-fns';
 
 import './App.css';
 
@@ -15,7 +15,7 @@ function App() {
   return (
     api && (
       <ApolloProvider client={api}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <WithThemeProvider>
             <Routes />
           </WithThemeProvider>

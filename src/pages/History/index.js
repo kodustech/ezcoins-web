@@ -22,11 +22,7 @@ const DONATIONS = gql`
 `;
 
 const History = memo(() => {
-  const {
-    data: { donations },
-    loading,
-    error,
-  } = useQuery(DONATIONS);
+  const { data: { donations } = {}, loading, error } = useQuery(DONATIONS);
 
   if (loading) return <div>Loading</div>;
 
