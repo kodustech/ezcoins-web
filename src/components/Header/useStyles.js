@@ -5,6 +5,14 @@ export default makeStyles(theme => ({
   grow: {
     flexGrow: 1,
   },
+  imageMarked: {
+    height: 1,
+    width: 20,
+    backgroundColor: theme.palette.common.white,
+    position: 'absolute',
+    bottom: 12,
+    left: 'calc(50% - 10px)',
+  },
   profile: {
     height: 40,
     width: 50,

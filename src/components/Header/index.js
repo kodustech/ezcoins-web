@@ -35,6 +35,9 @@ const Header = memo(() => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileAnchorEl, setMobileAnchorEl] = useState(null);
 
+  const menuId = useMemo(() => 'primary-search-account-menu', []);
+  const mobileMenuId = useMemo(() => 'primary-search-account-menu-mobile', []);
+
   const isMenuOpen = useMemo(() => Boolean(anchorEl), [anchorEl]);
   const isMobileMenuOpen = useMemo(() => Boolean(mobileAnchorEl), [mobileAnchorEl]);
 
@@ -61,6 +64,11 @@ const Header = memo(() => {
 
   const isAuthenticated = useMemo(() => pathname !== '/login', [pathname]);
 
+  const isActive = useCallback(value => (pathname === value ? classes.imageMarked : ''), [
+    classes.imageMarked,
+    pathname,
+  ]);
+
   const [logoutMutation] = useMutation(LOGOUT);
 
   const logout = useCallback(async () => {
@@ -76,10 +84,6 @@ const Header = memo(() => {
   const gotoHistory = useCallback(() => {
     history.push('/history');
   }, [history]);
-
-  const menuId = useMemo(() => 'primary-search-account-menu', []);
-
-  const mobileMenuId = useMemo(() => 'primary-search-account-menu-mobile', []);
 
   const renderDeleteIcon = useMemo(
     () => (
@@ -104,9 +108,11 @@ const Header = memo(() => {
             <div className={classes.sectionDesktop}>
               <Button color="inherit" onClick={gotoHistory}>
                 Histórico
+                <span className={isActive('/history')} />
               </Button>
               <Button color="inherit" onClick={gotoDonate}>
                 Doar
+                <span className={isActive('/donate')} />
               </Button>
               <Chip
                 className={classes.profileContainer}
