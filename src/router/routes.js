@@ -7,12 +7,15 @@ import Header from '../components/Header';
 import Donate from '../pages/Donate';
 import History from '../pages/History';
 import Login from '../pages/Login';
+import WithAuth from '../hocs/WithAuth';
 
 const Routes = memo(() => {
   return (
     <BrowserRouter>
       <div>
-        <Header />
+        <WithAuth>
+          <Header />
+        </WithAuth>
         <Switch>
           <Route
             exact
