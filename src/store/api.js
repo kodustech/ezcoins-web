@@ -6,9 +6,6 @@ import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { RetryLink } from 'apollo-link-retry';
-import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition } from 'apollo-utilities';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
 
 import resolvers from './resolvers';
 
@@ -30,37 +27,20 @@ export default () => {
       uri: `http://${process.env.REACT_APP_API_URL}/graphql`,
     });
 
-    const wsClient = new SubscriptionClient(`wss://${process.env.REACT_APP_API_URL}/graphql`, {
-      reconnect: true,
-    });
-    const webSocketLink = new WebSocketLink(wsClient);
-    const requestLink = ApolloLink.split(
-      ({ query }) => {
-        const { kind, operation } = getMainDefinition(query);
-        return kind === 'OperationDefinition' && operation === 'subscription';
+    const link = ApolloLink.from([authLink, retryLink, httpLink]);
+
+    const cache = new InMemoryCache({
+      cacheRedirects: {
+        Query: {
+          user: (_, { id }, { getCacheKey }) => getCacheKey({ id, __typename: 'UserType' }),
+        },
       },
-      webSocketLink,
-      httpLink,
-    );
-
-    const link = ApolloLink.from([authLink, retryLink, requestLink]);
-
-    const cache = new InMemoryCache();
-
-    const data = {
-      isSearchBarVisible: false,
-    };
-
-    cache.writeData({ data });
+    });
 
     const client = new ApolloClient({
       cache,
       link,
       resolvers,
-    });
-
-    client.onResetStore(() => {
-      cache.writeData({ data });
     });
 
     await persistCache({
@@ -73,7 +53,7 @@ export default () => {
 
   useEffect(() => {
     setup();
-  }, []);
+  }, [setup]);
 
   return api;
 };
