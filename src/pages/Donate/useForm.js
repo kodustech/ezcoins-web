@@ -7,7 +7,15 @@ import { useMutation } from '@apollo/react-hooks';
 const DONATE = gql`
   mutation($input: DonationInputType!) {
     donate(input: $input) {
-      id
+      sender {
+        id
+        wallet {
+          id
+          balance
+          toOffer
+          received
+        }
+      }
     }
   }
 `;
