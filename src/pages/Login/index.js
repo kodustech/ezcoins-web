@@ -17,7 +17,14 @@ const LOGIN = gql`
     login(input: $input) {
       token
       user {
+        id
         email
+        wallet {
+          id
+          toOffer
+          received
+          balance
+        }
       }
     }
   }
@@ -50,10 +57,14 @@ const Login = memo(() => {
     async input => {
       const {
         data: {
-          login: { token },
+          login: {
+            token,
+            user: { id },
+          },
         },
       } = await login({ variables: { input } });
-      await localStorage.setItem('token', token);
+      localStorage.setItem('token', token);
+      localStorage.setItem('userId', id);
       history.push('/home');
     },
     [history, login],
