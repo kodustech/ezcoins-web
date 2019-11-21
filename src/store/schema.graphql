@@ -27,12 +27,22 @@ type RootMutationType {
 
 type RootQueryType {
     donations: [DonationType]
+    user(id: ID): UserType
     users(exceptMe: Boolean): [UserType]
 }
 
 type UserType {
     email: String
     id: ID
+    wallet: WalletType
+}
+
+type WalletType {
+    balance: Int
+    id: ID
+    owner: UserType
+    received: Int
+    toOffer: Int
 }
 
 input AuthInputType {
