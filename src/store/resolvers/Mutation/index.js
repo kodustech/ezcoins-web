@@ -1,5 +1,1 @@
-import logout from './logout';
-
-export default {
-  logout,
-};
+export default {};
