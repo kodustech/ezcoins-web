@@ -1,8 +1,10 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
+import { useSnackbar } from 'notistack';
+import * as R from 'ramda';
 
 const DONATE = gql`
   mutation($input: DonationInputType!) {
@@ -41,27 +43,34 @@ export default () => {
       .label('Data')
       .required(),
     reason: Yup.string()
+      .min(5)
       .label('Motivo')
       .required(),
     quantity: Yup.number()
       .integer()
-      .min(1)
+      .moreThan(0)
       .label('Quantidade')
       .required(),
   });
 
   const onSubmit = useCallback(input => donate({ variables: { input } }), [donate]);
 
-  const { handleSubmit, handleChange, setFieldValue, values } = useFormik({
+  const { errors, values, isSubmitting, setErrors, ...formik } = useFormik({
     onSubmit,
     initialValues,
     validationSchema,
   });
 
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (R.isEmpty(errors) || !isSubmitting) return;
+    R.forEach(error => enqueueSnackbar(error, { variant: 'error' }), R.values(errors));
+    setErrors({});
+  }, [enqueueSnackbar, errors, isSubmitting, setErrors]);
+
   return {
-    handleSubmit,
-    handleChange,
-    setFieldValue,
+    ...formik,
     ...values,
   };
 };
