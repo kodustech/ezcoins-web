@@ -25,6 +25,8 @@ const DONATE = gql`
 export default () => {
   const [donate] = useMutation(DONATE);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const initialValues = useMemo(
     () => ({
       receiverUserId: '',
@@ -53,15 +55,20 @@ export default () => {
       .required(),
   });
 
-  const onSubmit = useCallback(input => donate({ variables: { input } }), [donate]);
+  const onSubmit = useCallback(
+    async (input, { resetForm }) => {
+      await donate({ variables: { input } });
+      enqueueSnackbar('Doado com sucesso!', { variant: 'success' });
+      resetForm();
+    },
+    [donate, enqueueSnackbar],
+  );
 
   const { errors, values, isSubmitting, setErrors, ...formik } = useFormik({
     onSubmit,
     initialValues,
     validationSchema,
   });
-
-  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (R.isEmpty(errors) || !isSubmitting) return;
