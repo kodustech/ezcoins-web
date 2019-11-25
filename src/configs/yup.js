@@ -19,4 +19,7 @@ setLocale({
     lowercase: vars => i18next.t('string.lowercase', vars),
     uppercase: vars => i18next.t('string.uppercase', vars),
   },
+  number: {
+    moreThan: vars => i18next.t('number.moreThan', vars),
+  },
 });
