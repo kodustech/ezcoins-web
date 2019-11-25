@@ -2,6 +2,7 @@ import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import { SnackbarProvider } from 'notistack';
 
 import './App.css';
 
@@ -15,11 +16,13 @@ function App() {
   return (
     api && (
       <ApolloProvider client={api}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <WithThemeProvider>
-            <Routes />
-          </WithThemeProvider>
-        </MuiPickersUtilsProvider>
+        <SnackbarProvider maxSnack={5}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <WithThemeProvider>
+              <Routes />
+            </WithThemeProvider>
+          </MuiPickersUtilsProvider>
+        </SnackbarProvider>
       </ApolloProvider>
     )
   );

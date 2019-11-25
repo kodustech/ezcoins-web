@@ -24,15 +24,7 @@ const Donate = memo(() => {
 
   const { data: { users = [] } = {}, error, loading } = useQuery(USERS);
 
-  const {
-    handleChange,
-    handleSubmit,
-    setFieldValue,
-    receiverUserId,
-    reason,
-    donateAt,
-    quantity,
-  } = useForm();
+  const form = useForm();
 
   if (loading) return <div>Loading</div>;
 
@@ -45,8 +37,8 @@ const Donate = memo(() => {
         <AvatarSelect
           name="receiverUserId"
           data={users}
-          onChange={setFieldValue}
-          value={receiverUserId}
+          onChange={form.setFieldValue}
+          value={form.receiverUserId}
         />
         <Grid
           ref={container}
@@ -58,18 +50,7 @@ const Donate = memo(() => {
             marginBottom: -150,
           }}
         >
-          <DonationCard
-            animation={animation}
-            container={container}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            setFieldValue={setFieldValue}
-            receiverUserId={receiverUserId}
-            reason={reason}
-            donateAt={donateAt}
-            quantity={quantity}
-            users={users}
-          />
+          <DonationCard animation={animation} container={container} users={users} {...form} />
         </Grid>
         <Grid container justify="center">
           <Lottie
