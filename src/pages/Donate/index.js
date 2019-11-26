@@ -13,7 +13,8 @@ const USERS = gql`
   query {
     users(exceptMe: true) {
       id
-      email
+      name
+      avatar
     }
   }
 `;

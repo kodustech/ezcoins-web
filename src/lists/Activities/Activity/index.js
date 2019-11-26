@@ -10,15 +10,14 @@ import {
 import * as PropTypes from 'prop-types';
 
 import useStyles from './useStyles';
-import avatar from '../../../assets/images/avatar.jpeg';
 
 const Activity = memo(
   ({
     activity: {
       quantity,
       reason,
-      receiver: { email: receiver },
-      sender: { email: sender },
+      receiver: { avatar: receiverAvatar, name: receiverName },
+      sender: { name: senderName },
     },
     odd,
   }) => {
@@ -32,18 +31,18 @@ const Activity = memo(
     const renderTitle = useMemo(
       () => (
         <>
-          <strong>{sender}</strong>
+          <strong>{senderName}</strong>
           <span> doou a </span>
-          <strong>{receiver}</strong>
+          <strong>{receiverName}</strong>
         </>
       ),
-      [receiver, sender],
+      [receiverName, senderName],
     );
 
     return (
       <ListItem alignItems="flex-start" className={containerClassName}>
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={avatar} />
+          <Avatar src={receiverAvatar} />
         </ListItemAvatar>
         <ListItemText
           primary={renderTitle}
@@ -64,10 +63,11 @@ Activity.propTypes = {
     quantity: PropTypes.number,
     reason: PropTypes.string,
     receiver: PropTypes.shape({
-      email: PropTypes.string,
+      avatar: PropTypes.string,
+      name: PropTypes.string,
     }),
     sender: PropTypes.shape({
-      email: PropTypes.string,
+      name: PropTypes.string,
     }),
   }),
   odd: PropTypes.bool,
@@ -78,10 +78,11 @@ Activity.defaultProps = {
     quantity: 0,
     reason: '',
     receiver: {
-      email: '',
+      avatar: '',
+      name: '',
     },
     sender: {
-      email: '',
+      name: '',
     },
   },
   odd: false,

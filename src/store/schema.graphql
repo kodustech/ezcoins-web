@@ -37,8 +37,10 @@ type RootSubscriptionType {
 }
 
 type UserType {
+    avatar: String
     email: String
     id: ID
+    name: String
     wallet: WalletType
 }
 
@@ -62,7 +64,9 @@ input DonationInputType {
 }
 
 input UserInputType {
+    avatar: String
     email: String!
+    name: String
     password: String!
     passwordConfirmation: String!
 }

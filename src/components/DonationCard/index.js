@@ -173,9 +173,9 @@ const DonationCard = memo(
                       displayEmpty
                     >
                       {map(
-                        ({ id, email }) => (
+                        ({ id, name }) => (
                           <MenuItem key={id} value={id}>
-                            {email}
+                            {name}
                           </MenuItem>
                         ),
                         users,

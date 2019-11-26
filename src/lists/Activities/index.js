@@ -24,10 +24,11 @@ Activities.propTypes = {
       quantity: PropTypes.number,
       reason: PropTypes.string,
       receiver: PropTypes.shape({
-        email: PropTypes.string,
+        avatar: PropTypes.string,
+        name: PropTypes.string,
       }),
       sender: PropTypes.shape({
-        email: PropTypes.string,
+        avatar: PropTypes.string,
       }),
     }),
   ),

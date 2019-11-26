@@ -8,22 +8,21 @@ import useStyles from './useStyles';
 const AvatarSelect = memo(({ data, name, onChange, value }) => {
   const classes = useStyles();
 
-  const onClick = useCallback(({ target: { id } }) => onChange(name, id), [name, onChange]);
+  const onClick = useCallback(({ target: { alt } }) => onChange(name, alt), [name, onChange]);
 
   return (
     <Grid container justify="center" spacing={2} className={classes.container}>
       {map(
-        ({ id, email }) => (
+        ({ id, avatar }) => (
           <Grid key={id}>
             <Avatar
-              id={id}
+              alt={id}
               onClick={onClick}
               name={name}
               value={value}
               className={`${classes.avatar} ${id === value ? 'selected' : ''}`}
-            >
-              {email.substr(0, 2)}
-            </Avatar>
+              src={avatar}
+            />
           </Grid>
         ),
         data,
