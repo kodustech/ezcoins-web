@@ -21,13 +21,14 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import Chip from '@material-ui/core/Chip';
 import useStyles from './useStyles';
-import avatar from '../../assets/images/avatar.jpeg';
 
 const USER = gql`
   query($id: ID) {
     user(id: $id) {
       id
+      name
       email
+      avatar
       wallet {
         id
         toOffer
@@ -80,6 +81,7 @@ const Header = memo(() => {
     client,
     data: {
       user: {
+        avatar,
         wallet: { toOffer },
       },
     },
@@ -111,7 +113,7 @@ const Header = memo(() => {
         </Badge>
       </div>
     ),
-    [classes.profile],
+    [avatar, classes.profile],
   );
 
   return (
