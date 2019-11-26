@@ -6,6 +6,10 @@ import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { RetryLink } from 'apollo-link-retry';
+import { getMainDefinition } from 'apollo-utilities';
+import * as AbsintheSocket from '@absinthe/socket';
+import { createAbsintheSocketLink } from '@absinthe/socket-apollo-link';
+import { Socket as PhoenixSocket } from 'phoenix';
 
 import resolvers from './resolvers';
 
@@ -13,21 +17,42 @@ export default () => {
   const [api, setApi] = useState(null);
 
   const setup = useCallback(async () => {
-    const token = localStorage.getItem('token');
+    const authorization = () => {
+      const token = localStorage.getItem('token');
+      return { authorization: token ? `Bearer ${token}` : '' };
+    };
 
     const authLink = setContext(async (_, { headers }) => ({
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : '',
+        ...authorization(),
       },
     }));
 
     const retryLink = new RetryLink();
+
     const httpLink = createHttpLink({
       uri: `http://${process.env.REACT_APP_API_URL}/graphql`,
     });
 
-    const link = ApolloLink.from([authLink, retryLink, httpLink]);
+    const absintheSocketLink = createAbsintheSocketLink(
+      AbsintheSocket.create(
+        new PhoenixSocket(`ws://${process.env.REACT_APP_API_URL}/socket`, {
+          params: () => ({ ...authorization() }),
+        }),
+      ),
+    );
+
+    const requestLink = ApolloLink.split(
+      ({ query }) => {
+        const { kind, operation } = getMainDefinition(query);
+        return kind === 'OperationDefinition' && operation === 'subscription';
+      },
+      absintheSocketLink,
+      httpLink,
+    );
+
+    const link = ApolloLink.from([authLink, retryLink, requestLink]);
 
     const cache = new InMemoryCache({
       cacheRedirects: {
