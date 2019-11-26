@@ -6,24 +6,82 @@ import { useMutation } from '@apollo/react-hooks';
 import { useSnackbar } from 'notistack';
 import * as R from 'ramda';
 
+const DONATIONS = gql`
+  query {
+    donations {
+      id
+      quantity
+      reason
+      sender {
+        id
+        email
+      }
+      receiver {
+        id
+        email
+      }
+    }
+  }
+`;
+
 const DONATE = gql`
   mutation($input: DonationInputType!) {
     donate(input: $input) {
+      id
+      quantity
+      reason
       sender {
         id
-        wallet {
-          id
-          balance
-          toOffer
-          received
-        }
+        email
+      }
+      receiver {
+        id
+        email
+      }
+    }
+  }
+`;
+
+const USER = gql`
+  query($id: ID) {
+    user(id: $id) {
+      id
+      email
+      wallet {
+        id
+        toOffer
+        received
+        balance
       }
     }
   }
 `;
 
 export default () => {
-  const [donate] = useMutation(DONATE);
+  const [donate] = useMutation(DONATE, {
+    update: (cache, { data: { donate: donated } }) => {
+      const variables = { id: donated.sender.id };
+      const { user } = cache.readQuery({ query: USER, variables });
+
+      const updatePath = (arr, obj, fn) => R.assocPath(arr, fn(R.path(arr, obj)), obj);
+
+      cache.writeQuery({
+        query: USER,
+        variables,
+        data: {
+          user: updatePath(['wallet', 'toOffer'], user, prev => prev - donated.quantity),
+        },
+      });
+
+      try {
+        const { donations } = cache.readQuery({ query: DONATIONS });
+        cache.writeQuery({
+          query: DONATIONS,
+          data: { donations: R.append(donated, donations) },
+        });
+      } catch {} // eslint-disable-line no-empty
+    },
+  });
 
   const { enqueueSnackbar } = useSnackbar();
 

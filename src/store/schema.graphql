@@ -3,6 +3,7 @@
 schema {
     query: RootQueryType
     mutation: RootMutationType
+    subscription: RootSubscriptionType
 }
 
 type AuthType {
@@ -31,6 +32,10 @@ type RootQueryType {
     users(exceptMe: Boolean): [UserType]
 }
 
+type RootSubscriptionType {
+    donationDone: DonationType
+}
+
 type UserType {
     email: String
     id: ID
@@ -40,7 +45,6 @@ type UserType {
 type WalletType {
     balance: Int
     id: ID
-    owner: UserType
     received: Int
     toOffer: Int
 }
