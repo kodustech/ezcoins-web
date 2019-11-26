@@ -12,9 +12,11 @@ const DONATIONS = gql`
       quantity
       reason
       sender {
+        id
         email
       }
       receiver {
+        id
         email
       }
     }
