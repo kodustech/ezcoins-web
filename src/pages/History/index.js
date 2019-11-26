@@ -13,11 +13,12 @@ const DONATIONS = gql`
       reason
       sender {
         id
-        email
+        name
       }
       receiver {
         id
-        email
+        name
+        avatar
       }
     }
   }
