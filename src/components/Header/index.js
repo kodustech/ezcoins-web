@@ -108,7 +108,7 @@ const Header = memo(() => {
   const renderDeleteIcon = useMemo(
     () => (
       <div className={classes.profile}>
-        <Badge badgeContent={8} overlap="circle" color="secondary">
+        <Badge badgeContent={0} overlap="circle" color="secondary">
           <Avatar src={avatar}>A</Avatar>
         </Badge>
       </div>
