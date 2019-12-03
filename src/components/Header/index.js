@@ -105,6 +105,10 @@ const Header = memo(() => {
     history.push('/history');
   }, [history]);
 
+  const gotoRegisterUser = useCallback(() => {
+    history.push('/register-user');
+  }, [history]);
+
   const renderDeleteIcon = useMemo(
     () => (
       <div className={classes.profile}>
@@ -125,6 +129,10 @@ const Header = memo(() => {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <Button color="inherit" onClick={gotoRegisterUser}>
+              Cadastro
+              <span className={isActive('/register-user')} />
+            </Button>
             <Button color="inherit" onClick={gotoHistory}>
               Histórico
               <span className={isActive('/history')} />
