@@ -130,8 +130,8 @@ const Header = memo(() => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button color="inherit" onClick={gotoRegisterUser}>
-              Cadastro
-              <span className={isActive('/register-user')} />
+              Usuários
+              <span className={isActive('/users')} />
             </Button>
             <Button color="inherit" onClick={gotoHistory}>
               Histórico

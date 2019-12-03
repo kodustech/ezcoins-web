@@ -6,6 +6,7 @@ export default makeStyles(theme => ({
     textAlign: 'center',
     color: 'black',
     fontSize: 22,
+    fontStyle: 'normal',
     marginTop: 50,
     textTransform: 'uppercase',
     backgroundClor: 'blue',
@@ -17,6 +18,6 @@ export default makeStyles(theme => ({
     background: 'black',
     position: 'absolute',
     left: 'calc(50% - 60px)',
-    marginTop: 5,
+    marginTop: 8,
   },
 }));

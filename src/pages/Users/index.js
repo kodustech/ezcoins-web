@@ -4,7 +4,7 @@ import { Container, Divider, Grid } from '@material-ui/core';
 // eslint-disable-next-line import/no-named-as-default
 import useStyles from './useStyles';
 
-const RegisterUser = memo(() => {
+const Users = memo(() => {
   const classes = useStyles();
   return (
     <Container maxWidth="md">
@@ -18,6 +18,6 @@ const RegisterUser = memo(() => {
   );
 });
 
-RegisterUser.propTypes = {};
-RegisterUser.defaultProps = {};
-export default RegisterUser;
+Users.propTypes = {};
+Users.defaultProps = {};
+export default Users;

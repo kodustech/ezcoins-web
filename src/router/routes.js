@@ -7,7 +7,7 @@ import Header from '../components/Header';
 import Donate from '../pages/Donate';
 import History from '../pages/History';
 import Login from '../pages/Login';
-import RegisterUser from '../pages/RegisterUser';
+import RegisterUser from '../pages/Users';
 import WithAuth from '../hocs/WithAuth';
 
 const Routes = memo(() => {
