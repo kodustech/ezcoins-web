@@ -6,13 +6,51 @@ import {
   TextField,
   Switch,
   FormControlLabel,
+  Button,
   ButtonBase,
   Typography,
+  Paper,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  IconButton,
 } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { withStyles, fade } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
 import useStyles from './useStyles';
 import avatar from '../../assets/images/Ellipse 2.png';
+
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: fade(theme.palette.primary.light, 0.8),
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default,
+    },
+  },
+}))(TableRow);
+
+function createData(name, date, button) {
+  return { name, date, button };
+}
+
+const rows = [
+  createData('Ana Laura', '24/10/2018', 6.0),
+  createData('Henrique Marciano', '28/01/2019', 9.0),
+  createData('Maykon Michel', '24/09/2018', 16.0),
+];
 
 const Users = memo(() => {
   const classes = useStyles();
@@ -96,6 +134,41 @@ const Users = memo(() => {
             </div>
           </form>
         </Grid>
+      </Grid>
+      <Grid container justify="center" className={classes.container} style={{ paddingTop: 20 }}>
+        <Button type="submit" variant="contained" color="primary" className={classes.submit}>
+          CADASTRAR
+        </Button>
+      </Grid>
+      <Grid container justify="center" className={classes.container} style={{ paddingTop: 20 }}>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <StyledTableRow>
+                <StyledTableCell style={{ borderTopLeftRadius: 20 }}>Nome</StyledTableCell>
+                <StyledTableCell>Data de Início</StyledTableCell>
+                <StyledTableCell align="right" style={{ borderTopRightRadius: 20 }}>
+                  Ações
+                </StyledTableCell>
+              </StyledTableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map(row => (
+                <StyledTableRow key={row.name}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.name}
+                  </StyledTableCell>
+                  <StyledTableCell>{row.date}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    <IconButton aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
       </Grid>
     </Container>
   );
