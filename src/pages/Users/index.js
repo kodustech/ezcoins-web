@@ -3,15 +3,16 @@ import {
   Container,
   Divider,
   Grid,
-  Avatar,
   TextField,
   Switch,
   FormControlLabel,
+  ButtonBase,
+  Typography,
 } from '@material-ui/core';
 import clsx from 'clsx';
 
 import useStyles from './useStyles';
-import avatar from '../../assets/images/avatar.jpg';
+import avatar from '../../assets/images/Ellipse 2.png';
 
 const Users = memo(() => {
   const classes = useStyles();
@@ -24,7 +25,36 @@ const Users = memo(() => {
         </Grid>
       </Grid>
       <Grid container justify="space-between" className={clsx(classes.container, classes.formUser)}>
-        <Grid item component={Avatar} alt="Avatar" src={avatar} className={classes.bigAvatar} />
+        <Grid item className={classes.bigAvatar}>
+          <ButtonBase
+            focusRipple
+            key="avatar"
+            className={classes.image}
+            focusVisibleClassName={classes.focusVisible}
+            style={{
+              width: 322,
+              height: 322,
+            }}
+          >
+            <span
+              className={classes.imageSrc}
+              style={{
+                backgroundImage: `url(${avatar})`,
+              }}
+            />
+            <span className={classes.imageBackdrop} />
+            <span className={classes.imageButton}>
+              <Typography
+                component="span"
+                variant="subtitle1"
+                color="inherit"
+                className={classes.imageTitle}
+              >
+                Inserir foto de perfil
+              </Typography>
+            </span>
+          </ButtonBase>
+        </Grid>
         <Grid item xs={6}>
           <form>
             <div>
