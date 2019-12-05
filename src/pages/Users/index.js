@@ -106,7 +106,7 @@ const Users = memo(() => {
                 autoFocus
               />
             </div>
-            <div style={{ paddingTop: 15 }}>
+            <div className={classes.formPadding}>
               <span>E-mail</span>
               <TextField
                 variant="outlined"
@@ -117,7 +117,7 @@ const Users = memo(() => {
                 autoFocus
               />
             </div>
-            <div style={{ paddingTop: 15 }}>
+            <div className={classes.formPadding}>
               <span>Data de Início</span>
               <TextField
                 variant="outlined"
@@ -128,26 +128,34 @@ const Users = memo(() => {
                 autoFocus
               />
             </div>
-            <div style={{ paddingTop: 15 }}>
+            <div className={classes.formPadding}>
               <span style={{ display: 'block' }}>Administrador</span>
               <FormControlLabel value="top" control={<Switch color="primary" />} />
             </div>
           </form>
         </Grid>
       </Grid>
-      <Grid container justify="center" className={classes.container} style={{ paddingTop: 20 }}>
+      <Grid
+        container
+        justify="center"
+        className={clsx(classes.container, classes.containersSenconday)}
+      >
         <Button type="submit" variant="contained" color="primary" className={classes.submit}>
           CADASTRAR
         </Button>
       </Grid>
-      <Grid container justify="center" className={classes.container} style={{ paddingTop: 20 }}>
+      <Grid
+        container
+        justify="center"
+        className={clsx(classes.container, classes.containersSenconday)}
+      >
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>
               <StyledTableRow>
-                <StyledTableCell style={{ borderTopLeftRadius: 20 }}>Nome</StyledTableCell>
+                <StyledTableCell className={classes.borderLeft}>Nome</StyledTableCell>
                 <StyledTableCell>Data de Início</StyledTableCell>
-                <StyledTableCell align="right" style={{ borderTopRightRadius: 20 }}>
+                <StyledTableCell align="right" className={classes.borderRight}>
                   Ações
                 </StyledTableCell>
               </StyledTableRow>

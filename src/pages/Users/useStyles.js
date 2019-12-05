@@ -1,12 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 
 export default makeStyles(theme => ({
-  // espaçamento de todo container
   container: {
     marginTop: 30,
   },
 
-  // título da pág
   title: {
     textAlign: 'center',
     color: 'black',
@@ -26,20 +24,25 @@ export default makeStyles(theme => ({
     marginTop: 8,
   },
 
-  // espaçamento entre os inputs
   formUser: {
     paddingTop: 50,
   },
 
-  // botão do avatar
+  formPadding: {
+    paddingTop: 15,
+  },
+
+  containersSenconday: {
+    paddingTop: 20,
+  },
+
   image: {
     position: 'relative',
     height: 200,
     [theme.breakpoints.down('xs')]: {
-      width: '100% !important', // Overrides inline-style
+      width: '100% !important',
       height: 100,
     },
-    // qnd é pressionado
     '&:hover, &$focusVisible': {
       zIndex: 1,
       borderRadius: 161,
@@ -73,7 +76,6 @@ export default makeStyles(theme => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center 40%',
   },
-  // fundo do botão
   imageBackdrop: {
     position: 'absolute',
     left: 0,
@@ -96,5 +98,12 @@ export default makeStyles(theme => ({
   },
   table: {
     minWidth: 700,
+  },
+
+  borderLeft: {
+    borderTopLeftRadius: 20,
+  },
+  borderRight: {
+    borderTopRightRadius: 20,
   },
 }));
