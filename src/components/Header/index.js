@@ -97,17 +97,15 @@ const Header = memo(() => {
     history.push('/login');
   }, [client, closeMenu, history]);
 
-  const gotoDonate = useCallback(() => {
-    history.push('/donate');
-  }, [history]);
-
-  const gotoHistory = useCallback(() => {
-    history.push('/history');
-  }, [history]);
-
-  const gotoRegisterUser = useCallback(() => {
-    history.push('/users');
-  }, [history]);
+  const handleNavigation = useCallback(
+    ({
+      target: {
+        id,
+        parentElement: { id: parentId },
+      },
+    }) => history.push(id || parentId),
+    [history],
+  );
 
   const renderDeleteIcon = useMemo(
     () => (
@@ -129,15 +127,15 @@ const Header = memo(() => {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Button color="inherit" onClick={gotoRegisterUser}>
+            <Button id="users" color="inherit" onClick={handleNavigation}>
               Usuários
               <span className={isActive('/users')} />
             </Button>
-            <Button color="inherit" onClick={gotoHistory}>
+            <Button id="history" color="inherit" onClick={handleNavigation}>
               Histórico
               <span className={isActive('/history')} />
             </Button>
-            <Button color="inherit" onClick={gotoDonate}>
+            <Button id="donate" color="inherit" onClick={handleNavigation}>
               Doar
               <span className={isActive('/donate')} />
             </Button>
