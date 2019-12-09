@@ -1,8 +1,5 @@
 import React, { memo, useCallback, useMemo } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { Button, CircularProgress, Grid, TextField, Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -56,23 +53,29 @@ const Login = memo(() => {
   });
 
   const onSubmit = useCallback(
-    async input => {
-      const {
-        data: {
-          login: {
-            token,
-            user: { id },
+    async (input, { setSubmitting, setErrors }) => {
+      try {
+        const {
+          data: {
+            login: {
+              token,
+              user: { id },
+            },
           },
-        },
-      } = await login({ variables: { input } });
-      localStorage.setItem('token', token);
-      localStorage.setItem('userId', id);
-      history.push('/home');
+        } = await login({ variables: { input } });
+        localStorage.setItem('token', token);
+        localStorage.setItem('userId', id);
+        setSubmitting(false);
+        history.push('/home');
+      } catch ({ graphQLErrors: [{ details }] }) {
+        setErrors(details);
+        setSubmitting(false);
+      }
     },
     [history, login],
   );
 
-  const { handleSubmit, handleChange, values } = useFormik({
+  const { handleSubmit, handleChange, values, isSubmitting, errors } = useFormik({
     onSubmit,
     initialValues,
     validationSchema,
@@ -91,6 +94,8 @@ const Login = memo(() => {
             </Typography>
             <form className={classes.form} onSubmit={handleSubmit}>
               <TextField
+                error={!!errors.email}
+                helperText={errors.email}
                 variant="outlined"
                 margin="normal"
                 required
@@ -122,7 +127,9 @@ const Login = memo(() => {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                disabled={isSubmitting}
               >
+                {isSubmitting && <CircularProgress size={24} className={classes.buttonProgress} />}
                 ENTRAR
               </Button>
             </form>

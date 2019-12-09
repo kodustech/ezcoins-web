@@ -1,24 +1,24 @@
 import React, { memo } from 'react';
 import {
-  Container,
-  Divider,
-  Grid,
-  TextField,
-  Switch,
-  FormControlLabel,
   Button,
   ButtonBase,
-  Typography,
-  Paper,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
+  Container,
+  Divider,
+  FormControlLabel,
+  Grid,
   IconButton,
+  Paper,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { withStyles, fade } from '@material-ui/core/styles';
+import { fade, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
 import useStyles from './useStyles';
