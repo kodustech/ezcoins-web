@@ -9,6 +9,7 @@ const DONATIONS = gql`
   query {
     donations {
       id
+      donateAt
       quantity
       reason
       sender {
