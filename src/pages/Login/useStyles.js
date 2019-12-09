@@ -1,6 +1,14 @@
 import { makeStyles } from '@material-ui/core';
 
 export default makeStyles(theme => ({
+  buttonWrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonProgress: {
+    color: theme.palette.secondary.dark,
+    position: 'absolute',
+  },
   root: {
     height: '100vh',
   },

@@ -1,8 +1,5 @@
 import React, { memo, useCallback, useMemo } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { Button, CircularProgress, Grid, TextField, Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -72,7 +69,7 @@ const Login = memo(() => {
     [history, login],
   );
 
-  const { handleSubmit, handleChange, values } = useFormik({
+  const { handleSubmit, handleChange, values, isSubmitting } = useFormik({
     onSubmit,
     initialValues,
     validationSchema,
@@ -122,7 +119,9 @@ const Login = memo(() => {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                disabled={isSubmitting}
               >
+                {isSubmitting && <CircularProgress size={24} className={classes.buttonProgress} />}
                 ENTRAR
               </Button>
             </form>
