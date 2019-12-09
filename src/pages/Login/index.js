@@ -53,23 +53,29 @@ const Login = memo(() => {
   });
 
   const onSubmit = useCallback(
-    async input => {
-      const {
-        data: {
-          login: {
-            token,
-            user: { id },
+    async (input, { setSubmitting, setErrors }) => {
+      try {
+        const {
+          data: {
+            login: {
+              token,
+              user: { id },
+            },
           },
-        },
-      } = await login({ variables: { input } });
-      localStorage.setItem('token', token);
-      localStorage.setItem('userId', id);
-      history.push('/home');
+        } = await login({ variables: { input } });
+        localStorage.setItem('token', token);
+        localStorage.setItem('userId', id);
+        setSubmitting(false);
+        history.push('/home');
+      } catch ({ graphQLErrors: [{ details }] }) {
+        setErrors(details);
+        setSubmitting(false);
+      }
     },
     [history, login],
   );
 
-  const { handleSubmit, handleChange, values, isSubmitting } = useFormik({
+  const { handleSubmit, handleChange, values, isSubmitting, errors } = useFormik({
     onSubmit,
     initialValues,
     validationSchema,
@@ -88,6 +94,8 @@ const Login = memo(() => {
             </Typography>
             <form className={classes.form} onSubmit={handleSubmit}>
               <TextField
+                error={!!errors.email}
+                helperText={errors.email}
                 variant="outlined"
                 margin="normal"
                 required
