@@ -41,7 +41,7 @@ const Routes = memo(() => {
           <WithAuthRoute path="/donate">
             <Donate />
           </WithAuthRoute>
-          <WithAuthRoute path="/register-user">
+          <WithAuthRoute path="/users">
             <RegisterUser />
           </WithAuthRoute>
         </Switch>

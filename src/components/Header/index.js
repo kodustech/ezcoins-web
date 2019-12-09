@@ -106,7 +106,7 @@ const Header = memo(() => {
   }, [history]);
 
   const gotoRegisterUser = useCallback(() => {
-    history.push('/register-user');
+    history.push('/users');
   }, [history]);
 
   const renderDeleteIcon = useMemo(
