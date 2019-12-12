@@ -4,10 +4,20 @@ import gql from 'graphql-tag';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import source from '../../assets/images/bg-login.png';
 import useStyles from './useStyles';
+
+const USERS = gql`
+  query {
+    users(exceptMe: false) {
+      id
+      name
+      avatar
+    }
+  }
+`;
 
 const LOGIN = gql`
   mutation($input: AuthInputType) {
@@ -32,6 +42,8 @@ const LOGIN = gql`
 const Login = memo(() => {
   const classes = useStyles();
   const history = useHistory();
+
+  useQuery(USERS);
 
   const [login] = useMutation(LOGIN);
 
