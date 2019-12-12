@@ -1,9 +1,16 @@
 {
+  "date": {
+    "min": "{{path}} deve ser posterior a {{min}}",
+    "max": "{{path}} deve ser anterior a {{max}}"
+  },
   "mixed": {
     "default": "{{path}} inválido",
     "required": "{{path}} é obrigatório.",
     "oneOf": "{{path}} deve ter um dos seguintes valores: {{values}}",
     "notOneOf": "{{path}} não deve ter um dos seguintes valores: {{values}}"
+  },
+  "number": {
+    "moreThan": "{{path}} deve ser maior que {{more}}"
   },
   "string": {
     "length": "{{path}} deve ter exatamente {{length}} caracteres",
@@ -15,8 +22,5 @@
     "trim": "{{path}} não deve conter espaços",
     "lowercase": "{{path}} deve conter apenas letras minúsculas",
     "uppercase": "{{path}} deve conter apenas letras maiúsculas"
-  },
-  "number": {
-    "moreThan": "{{path}} deve ser maior que  {{more}}"
   }
 }
