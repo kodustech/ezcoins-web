@@ -24,10 +24,11 @@ type RootMutationType {
     createUser(input: UserInputType!): UserType
     donate(input: DonationInputType!): DonationType
     login(input: AuthInputType!): AuthType
+    resignUser(input: ResignUserInputType!): UserType
 }
 
 type RootQueryType {
-    donations: [DonationType]
+    donations(filters: DonationFilterType): [DonationType]
     user(id: ID): UserType
     users(exceptMe: Boolean): [UserType]
 }
@@ -39,8 +40,10 @@ type RootSubscriptionType {
 type UserType {
     avatar: String
     email: String
+    hiredAt: String
     id: ID
     name: String
+    resignedAt: String
     wallet: WalletType
 }
 
@@ -56,6 +59,11 @@ input AuthInputType {
     password: String!
 }
 
+input DonationFilterType {
+    maxDate: String
+    minDate: String
+}
+
 input DonationInputType {
     donateAt: String
     quantity: Int
@@ -63,9 +71,15 @@ input DonationInputType {
     receiverUserId: ID
 }
 
+input ResignUserInputType {
+    id: ID!
+    resignedAt: String!
+}
+
 input UserInputType {
     avatar: String
     email: String!
+    hiredAt: String
     name: String
     password: String!
     passwordConfirmation: String!
