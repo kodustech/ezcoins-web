@@ -12,8 +12,8 @@ type AuthType {
 }
 
 type DonationType {
-    donateAt: String
     id: ID
+    insertedAt: String
     quantity: Int
     reason: String
     receiver: UserType
@@ -65,7 +65,6 @@ input DonationFilterType {
 }
 
 input DonationInputType {
-    donateAt: String
     quantity: Int
     reason: String
     receiverUserId: ID

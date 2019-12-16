@@ -20,7 +20,7 @@ import useStyles from './useStyles';
 const DonationCard = memo(
   ({
     animation,
-    donateAt,
+    insertedAt,
     handleChange,
     handleSubmit,
     quantity,
@@ -83,7 +83,7 @@ const DonationCard = memo(
 
     const onChangeDate = useCallback(
       nextDate => {
-        setFieldValue('donateAt', nextDate.toISOString());
+        setFieldValue('insertedAt', nextDate.toISOString());
       },
       [setFieldValue],
     );
@@ -148,7 +148,7 @@ const DonationCard = memo(
                     Parabéns
                   </Grid>
                   <Grid
-                    value={donateAt}
+                    value={insertedAt}
                     onChange={onChangeDate}
                     item
                     xs={5}
@@ -236,7 +236,7 @@ DonationCard.propTypes = {
       }),
     }),
   }),
-  donateAt: PropTypes.string,
+  insertedAt: PropTypes.string,
   handleChange: PropTypes.func,
   handleSubmit: PropTypes.func,
   quantity: PropTypes.number,
@@ -253,7 +253,7 @@ DonationCard.propTypes = {
 
 DonationCard.defaultProps = {
   animation: null,
-  donateAt: '',
+  insertedAt: '',
   handleChange: () => {},
   handleSubmit: () => {},
   quantity: 0,

@@ -11,7 +11,7 @@ const DONATIONS = gql`
   query($filters: DonationFilterType = {}) {
     donations(filters: $filters) {
       id
-      donateAt
+      insertedAt
       quantity
       reason
       sender {

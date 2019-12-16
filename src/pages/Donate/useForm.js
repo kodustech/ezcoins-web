@@ -88,7 +88,7 @@ export default () => {
   const initialValues = useMemo(
     () => ({
       receiverUserId: '',
-      donateAt: new Date().toISOString(),
+      insertedAt: new Date().toISOString(),
       reason: '',
       quantity: 0,
     }),
@@ -99,7 +99,7 @@ export default () => {
     receiverUserId: Yup.string()
       .label('Destinatário')
       .required(),
-    donateAt: Yup.date()
+    insertedAt: Yup.date()
       .label('Data')
       .required(),
     reason: Yup.string()

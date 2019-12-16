@@ -16,7 +16,7 @@ import useStyles from './useStyles';
 const Activity = memo(
   ({
     activity: {
-      donateAt,
+      insertedAt,
       quantity,
       reason,
       receiver: { avatar: receiverAvatar, name: receiverName },
@@ -26,7 +26,9 @@ const Activity = memo(
   }) => {
     const classes = useStyles();
 
-    const formattedDonateAt = useMemo(() => format(parseISO(donateAt), 'dd/MM/yyyy'), [donateAt]);
+    const formattedInsertedAt = useMemo(() => format(parseISO(insertedAt), 'dd/MM/yyyy'), [
+      insertedAt,
+    ]);
 
     const containerClassName = useMemo(
       () => `${classes.container} ${odd ? classes.odd : classes.even}`,
@@ -57,7 +59,7 @@ const Activity = memo(
           <Grid container>
             <Grid item className={classes.date}>
               <Grid container alignItems="center">
-                {formattedDonateAt}
+                {formattedInsertedAt}
               </Grid>
             </Grid>
             <Grid item component={Avatar} variant="square" className={classes.quantity}>
@@ -72,7 +74,7 @@ const Activity = memo(
 
 Activity.propTypes = {
   activity: PropTypes.shape({
-    donateAt: PropTypes.string,
+    insertedAt: PropTypes.string,
     quantity: PropTypes.number,
     reason: PropTypes.string,
     receiver: PropTypes.shape({
