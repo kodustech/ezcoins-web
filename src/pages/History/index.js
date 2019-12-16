@@ -1,9 +1,19 @@
 import React, { memo } from 'react';
-import gql from 'graphql-tag';
-import { useLazyQuery } from '@apollo/react-hooks';
-
-import { Container, CssBaseline, Grid } from '@material-ui/core';
+import {
+  Container,
+  CssBaseline,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@material-ui/core';
 import { KeyboardDatePicker } from '@material-ui/pickers';
+import gql from 'graphql-tag';
+import { useLazyQuery, useQuery } from '@apollo/react-hooks';
+import { map } from 'ramda';
+
+import useStyles from './useStyles';
 import ActivitiesList from '../../lists/Activities';
 import useFilters from './useFilters';
 
@@ -27,10 +37,24 @@ const DONATIONS = gql`
   }
 `;
 
+const USERS = gql`
+  query {
+    users {
+      id
+      name
+    }
+  }
+`;
+
 const History = memo(() => {
+  const classes = useStyles();
+
+  const { data: { users = [] } = {} } = useQuery(USERS);
   const [loadDonations, { data: { donations } = {}, loading, error }] = useLazyQuery(DONATIONS);
 
-  const { minDateProps, maxDateProps } = useFilters(loadDonations);
+  const { maxDateProps, minDateProps, receiverUserProps, senderUserProps } = useFilters(
+    loadDonations,
+  );
 
   if (loading) return <div>Loading</div>;
 
@@ -40,25 +64,55 @@ const History = memo(() => {
     <>
       <CssBaseline />
       <Container maxWidth="md">
-        <Grid container style={{ marginTop: 50 }}>
-          <Grid
-            item
-            xs={3}
-            component={KeyboardDatePicker}
-            format="dd/MM/yyyy"
-            label="Doado do dia"
-            invalidDateMessage="Data inválida"
-            {...minDateProps}
-          />
-          <Grid
-            item
-            xs={3}
-            component={KeyboardDatePicker}
-            format="dd/MM/yyyy"
-            label="Até o dia"
-            invalidDateMessage="Data inválida"
-            {...maxDateProps}
-          />
+        <Grid container justify="space-between" className={classes.filters}>
+          <Grid item xs={3} className={classes.filter}>
+            <KeyboardDatePicker
+              format="dd/MM/yyyy"
+              label="Doado do dia"
+              invalidDateMessage="Data inválida"
+              {...minDateProps}
+            />
+          </Grid>
+          <Grid item xs={3} className={classes.filter}>
+            <KeyboardDatePicker
+              format="dd/MM/yyyy"
+              label="Até o dia"
+              invalidDateMessage="Data inválida"
+              {...maxDateProps}
+            />
+          </Grid>
+          <Grid item xs={3} className={classes.filter}>
+            <FormControl>
+              <InputLabel shrink>De</InputLabel>
+              <Select name="senderUserId" displayEmpty {...senderUserProps}>
+                <MenuItem value="">Todos</MenuItem>
+                {map(
+                  ({ id, name }) => (
+                    <MenuItem key={id} value={id}>
+                      {name}
+                    </MenuItem>
+                  ),
+                  users,
+                )}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={3} className={classes.filter}>
+            <FormControl>
+              <InputLabel shrink>Para</InputLabel>
+              <Select name="receiverUserId" displayEmpty {...receiverUserProps}>
+                <MenuItem value="">Todos</MenuItem>
+                {map(
+                  ({ id, name }) => (
+                    <MenuItem key={id} value={id}>
+                      {name}
+                    </MenuItem>
+                  ),
+                  users,
+                )}
+              </Select>
+            </FormControl>
+          </Grid>
         </Grid>
         <ActivitiesList activities={donations} />
       </Container>
