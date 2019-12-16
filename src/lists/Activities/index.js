@@ -21,7 +21,7 @@ const Activities = memo(({ activities }) => {
 Activities.propTypes = {
   activities: PropTypes.arrayOf(
     PropTypes.shape({
-      donateAt: PropTypes.string,
+      insertedAt: PropTypes.string,
       quantity: PropTypes.number,
       reason: PropTypes.string,
       receiver: PropTypes.shape({

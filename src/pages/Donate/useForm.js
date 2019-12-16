@@ -88,7 +88,6 @@ export default () => {
   const initialValues = useMemo(
     () => ({
       receiverUserId: '',
-      donateAt: new Date().toISOString(),
       reason: '',
       quantity: 0,
     }),
@@ -98,9 +97,6 @@ export default () => {
   const validationSchema = Yup.object().shape({
     receiverUserId: Yup.string()
       .label('Destinatário')
-      .required(),
-    donateAt: Yup.date()
-      .label('Data')
       .required(),
     reason: Yup.string()
       .min(5)

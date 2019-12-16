@@ -10,17 +10,16 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import { KeyboardDatePicker } from '@material-ui/pickers';
 import { DraggableCore } from 'react-draggable';
 import * as PropTypes from 'prop-types';
 import { map } from 'ramda';
+import { format } from 'date-fns';
 
 import useStyles from './useStyles';
 
 const DonationCard = memo(
   ({
     animation,
-    donateAt,
     handleChange,
     handleSubmit,
     quantity,
@@ -48,6 +47,8 @@ const DonationCard = memo(
       }),
       [dragging, translate],
     );
+
+    const insertedAt = useMemo(() => format(new Date(), 'dd/MM/yyyy'), []);
 
     const onDragStart = useCallback(() => {
       setDragging(true);
@@ -80,13 +81,6 @@ const DonationCard = memo(
         setTranslate(300);
       }
     }, [animation, translate]);
-
-    const onChangeDate = useCallback(
-      nextDate => {
-        setFieldValue('donateAt', nextDate.toISOString());
-      },
-      [setFieldValue],
-    );
 
     const onChangeQuantity = useCallback(
       ({ target: { value } }) => {
@@ -144,17 +138,12 @@ const DonationCard = memo(
               <Grid item xs={1} className={classes.edge} />
               <Grid item xs={11} className={classes.body}>
                 <Grid container>
-                  <Grid item xs={7} component={Typography} variant="h4">
+                  <Grid item xs={8} component={Typography} variant="h4">
                     Parabéns
                   </Grid>
-                  <Grid
-                    value={donateAt}
-                    onChange={onChangeDate}
-                    item
-                    xs={5}
-                    component={KeyboardDatePicker}
-                    format="dd/MM/yyyy"
-                  />
+                  <Grid item xs={4} className={classes.insertedAt}>
+                    {insertedAt}
+                  </Grid>
                   <Grid
                     item
                     xs={3}
@@ -236,7 +225,6 @@ DonationCard.propTypes = {
       }),
     }),
   }),
-  donateAt: PropTypes.string,
   handleChange: PropTypes.func,
   handleSubmit: PropTypes.func,
   quantity: PropTypes.number,
@@ -253,7 +241,6 @@ DonationCard.propTypes = {
 
 DonationCard.defaultProps = {
   animation: null,
-  donateAt: '',
   handleChange: () => {},
   handleSubmit: () => {},
   quantity: 0,
