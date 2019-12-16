@@ -11,6 +11,10 @@ export default loadDonations => {
   const validationSchema = useMemo(
     () =>
       Yup.object().shape({
+        maxDate: Yup.date()
+          .label('Data final')
+          .required()
+          .max(maxEndDate, 'Somente doações de meses anteriores'),
         minDate: Yup.date()
           .label('Data inicial')
           .required()
@@ -20,10 +24,8 @@ export default loadDonations => {
               'Deve ser anterior a data final',
             ),
           ),
-        maxDate: Yup.date()
-          .label('Data final')
-          .required()
-          .max(maxEndDate, 'Somente doações de meses anteriores'),
+        receiverUserId: Yup.string().label('De'),
+        senderUserId: Yup.string().label('Para'),
       }),
     [maxEndDate],
   );
@@ -32,6 +34,8 @@ export default loadDonations => {
     () => ({
       minDate: startOfMonth(maxEndDate),
       maxDate: maxEndDate,
+      receiverUserId: '',
+      senderUserId: '',
     }),
     [maxEndDate],
   );
@@ -45,9 +49,10 @@ export default loadDonations => {
   );
 
   const {
+    handleChange,
     handleSubmit,
     setFieldValue,
-    values: { maxDate, minDate },
+    values: { maxDate, minDate, receiverUserId, senderUserId },
     errors: { maxDate: maxDateMessage, minDate: minDateMessage },
   } = useFormik({
     validationSchema,
@@ -55,19 +60,9 @@ export default loadDonations => {
     onSubmit,
   });
 
-  const onChangeMinDate = useCallback(value => setFieldValue('minDate', value), [setFieldValue]);
-
   const onChangeMaxDate = useCallback(value => setFieldValue('maxDate', value), [setFieldValue]);
 
-  const minDateProps = useMemo(
-    () => ({
-      value: minDate,
-      onChange: onChangeMinDate,
-      maxDate: maxStartDate,
-      maxDateMessage: minDateMessage,
-    }),
-    [maxStartDate, minDate, minDateMessage, onChangeMinDate],
-  );
+  const onChangeMinDate = useCallback(value => setFieldValue('minDate', value), [setFieldValue]);
 
   const maxDateProps = useMemo(
     () => ({
@@ -79,12 +74,49 @@ export default loadDonations => {
     [maxDate, onChangeMaxDate, maxEndDate, maxDateMessage],
   );
 
+  const minDateProps = useMemo(
+    () => ({
+      value: minDate,
+      onChange: onChangeMinDate,
+      maxDate: maxStartDate,
+      maxDateMessage: minDateMessage,
+    }),
+    [maxStartDate, minDate, minDateMessage, onChangeMinDate],
+  );
+
+  const receiverUserProps = useMemo(
+    () => ({
+      value: receiverUserId,
+      onChange: handleChange,
+    }),
+    [handleChange, receiverUserId],
+  );
+
+  const senderUserProps = useMemo(
+    () => ({
+      value: senderUserId,
+      onChange: handleChange,
+    }),
+    [handleChange, senderUserId],
+  );
+
   useEffect(() => {
     if (!minDateMessage && !maxDateMessage) handleSubmit();
-  }, [handleSubmit, loadDonations, minDate, maxDate, minDateMessage, maxDateMessage]);
+  }, [
+    handleSubmit,
+    loadDonations,
+    maxDate,
+    minDate,
+    receiverUserId,
+    senderUserId,
+    minDateMessage,
+    maxDateMessage,
+  ]);
 
   return {
-    minDateProps,
     maxDateProps,
+    minDateProps,
+    receiverUserProps,
+    senderUserProps,
   };
 };
