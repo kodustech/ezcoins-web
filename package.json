@@ -25,7 +25,7 @@
     "graphql-tag": "^2.10.1",
     "i18next": "^19.0.2",
     "notistack": "^0.9.7",
-    "phoenix": "^1.4.11",
+    "phoenix": "^1.4.12",
     "prop-types": "^15.7.2",
     "ramda": "^0.26.1",
     "react": "^16.12.0",
