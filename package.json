@@ -23,7 +23,7 @@
     "formik": "^2.1.2",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.1",
-    "i18next": "^19.0.3",
+    "i18next": "^19.1.0",
     "notistack": "^0.9.7",
     "phoenix": "^1.4.12",
     "prop-types": "^15.7.2",
