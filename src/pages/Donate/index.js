@@ -6,8 +6,8 @@ import Lottie from 'react-lottie';
 
 import Typography from '@material-ui/core/Typography';
 import useForm from './useForm';
-import openBox from '../../assets/lottiefiles/8367-open-box';
-import emptyBox from '../../assets/lottiefiles/629-empty-box';
+import openBox from '../../assets/lottiefiles/8367-open-box.json';
+import emptyBox from '../../assets/lottiefiles/629-empty-box.json';
 import AvatarSelect from '../../components/AvatarSelect';
 import DonationCard from '../../components/DonationCard';
 import useStyles from './useStyles';

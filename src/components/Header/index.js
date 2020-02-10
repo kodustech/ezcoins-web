@@ -10,11 +10,7 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import {
-  AccountCircle,
-  MoreVert as MoreIcon,
-  Notifications as NotificationsIcon,
-} from '@material-ui/icons';
+import { MoreVert as MoreIcon } from '@material-ui/icons';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -43,13 +39,12 @@ const Header = memo(() => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [mobileAnchorEl, setMobileAnchorEl] = useState(null);
+  const [, setMobileAnchorEl] = useState(null);
 
   const menuId = useMemo(() => 'primary-search-account-menu', []);
   const mobileMenuId = useMemo(() => 'primary-search-account-menu-mobile', []);
 
   const isMenuOpen = useMemo(() => Boolean(anchorEl), [anchorEl]);
-  const isMobileMenuOpen = useMemo(() => Boolean(mobileAnchorEl), [mobileAnchorEl]);
 
   const openProfileMenu = useCallback(({ currentTarget }) => {
     setAnchorEl(currentTarget);
@@ -82,7 +77,7 @@ const Header = memo(() => {
     data: {
       user: {
         avatar,
-        wallet: { toOffer },
+        wallet: { balance, toOffer },
       },
     },
   } = useQuery(USER, {
@@ -132,12 +127,14 @@ const Header = memo(() => {
               <span className={isActive('/history')} />
             </Button>
             <Button id="donate" color="inherit" onClick={handleNavigation}>
-              Doar
+              Doar(
+              {toOffer}
+              )
               <span className={isActive('/donate')} />
             </Button>
             <Chip
               className={classes.profileContainer}
-              label={`EZȻ ${toOffer}`}
+              label={`EZȻ ${balance}`}
               onDelete={openProfileMenu}
               deleteIcon={renderDeleteIcon}
             />
@@ -166,35 +163,6 @@ const Header = memo(() => {
       >
         <MenuItem onClick={closeMenu}>Minha conta</MenuItem>
         <MenuItem onClick={logout}>Sair</MenuItem>
-      </Menu>
-      <Menu
-        anchorEl={mobileAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        id={mobileMenuId}
-        keepMounted
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={closeMobileMenu}
-      >
-        <MenuItem>
-          <IconButton aria-label="show 11 new notifications" color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={openProfileMenu}>
-          <IconButton
-            aria-label="account of current user"
-            aria-controls="primary-search-account-menu"
-            aria-haspopup="true"
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
       </Menu>
     </div>
   );
