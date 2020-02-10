@@ -1,0 +1,85 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: RootQueryType
+    mutation: RootMutationType
+    subscription: RootSubscriptionType
+}
+
+type AuthType {
+    token: String
+    user: UserType
+}
+
+type DonationType {
+    id: ID
+    insertedAt: String
+    quantity: Int
+    reason: String
+    receiver: UserType
+    sender: UserType
+}
+
+type RootMutationType {
+    createUser(input: UserInputType!): UserType
+    donate(input: DonationInputType!): DonationType
+    login(input: AuthInputType!): AuthType
+    resignUser(input: ResignUserInputType!): UserType
+}
+
+type RootQueryType {
+    donations(filters: DonationFilterType): [DonationType]
+    user(id: ID): UserType
+    users(exceptMe: Boolean): [UserType]
+}
+
+type RootSubscriptionType {
+    donationDone: DonationType
+}
+
+type UserType {
+    avatar: String
+    email: String
+    hiredAt: String
+    id: ID
+    name: String
+    resignedAt: String
+    wallet: WalletType
+}
+
+type WalletType {
+    balance: Int
+    id: ID
+    received: Int
+    toOffer: Int
+}
+
+input AuthInputType {
+    email: String!
+    password: String!
+}
+
+input DonationFilterType {
+    maxDate: String
+    minDate: String
+}
+
+input DonationInputType {
+    quantity: Int
+    reason: String
+    receiverUserId: ID
+}
+
+input ResignUserInputType {
+    id: ID!
+    resignedAt: String!
+}
+
+input UserInputType {
+    avatar: String
+    email: String!
+    hiredAt: String
+    name: String
+    password: String!
+    passwordConfirmation: String!
+}

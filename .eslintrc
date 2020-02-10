@@ -1,0 +1,35 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "prettier"
+  ],
+  "plugins": ["prettier"],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "rules": {
+    "prettier/prettier": ["error"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-wrap-multilines": 2,
+    "react/prop-types": [
+      "error",
+      {
+        "ignore": [
+          "children"
+        ]
+      }
+    ],
+    "react/jsx-props-no-spreading": 0,
+    "no-bitwise": [
+      "error",
+      {
+        "allow": [
+          "^"
+        ]
+      }
+    ]
+  }
+}

@@ -1,25 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { SnackbarProvider } from 'notistack';
+
 import './App.css';
 
+import Routes from './router/routes';
+import WithThemeProvider from './hocs/WithThemeProvider';
+import useApi from './store/api';
+
 function App() {
+  const api = useApi();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    api && (
+      <ApolloProvider client={api}>
+        <SnackbarProvider maxSnack={5}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <WithThemeProvider>
+              <Routes />
+            </WithThemeProvider>
+          </MuiPickersUtilsProvider>
+        </SnackbarProvider>
+      </ApolloProvider>
+    )
   );
 }
 
