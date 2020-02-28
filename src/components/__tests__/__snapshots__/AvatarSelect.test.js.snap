@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing avatar select component should renders as expected 1`] = `
+<div>
+  <div
+    class="MuiGrid-root makeStyles-container-114 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
+  >
+    <div
+      class="MuiGrid-root"
+    >
+      <div
+        class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-113 "
+        name="testName"
+        value=""
+      >
+        <img
+          alt="1"
+          class="MuiAvatar-img"
+          src="https://upload.wikimedia.org/wikipedia/pt/c/ce/Aang.png"
+        />
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root"
+    >
+      <div
+        class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-113 "
+        name="testName"
+        value=""
+      >
+        <img
+          alt="2"
+          class="MuiAvatar-img"
+          src="https://upload.wikimedia.org/wikipedia/pt/c/ce/Aang.png"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`testing avatar select component should renders without props as expected 1`] = `
+<div>
+  <div
+    class="MuiGrid-root makeStyles-container-2 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
+  />
+</div>
+`;
