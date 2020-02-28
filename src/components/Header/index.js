@@ -3,7 +3,6 @@ import {
   AppBar,
   Avatar,
   Badge,
-  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -13,10 +12,12 @@ import {
 import { MoreVert as MoreIcon } from '@material-ui/icons';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import { useHistory, useLocation } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
+
 import useStyles from './useStyles';
+
+import HeaderItem from '../HeaderItem';
 
 const USER = gql`
   query($id: ID) {
@@ -65,13 +66,6 @@ const Header = memo(() => {
 
   const history = useHistory();
 
-  const { pathname } = useLocation();
-
-  const isActive = useCallback(value => (pathname === value ? classes.imageMarked : ''), [
-    classes.imageMarked,
-    pathname,
-  ]);
-
   const {
     client,
     data: {
@@ -91,16 +85,6 @@ const Header = memo(() => {
     localStorage.clear();
     history.push('/login');
   }, [client, closeMenu, history]);
-
-  const handleNavigation = useCallback(
-    ({
-      target: {
-        id,
-        parentElement: { id: parentId },
-      },
-    }) => history.push(id || parentId),
-    [history],
-  );
 
   const renderDeleteIcon = useMemo(
     () => (
@@ -122,16 +106,8 @@ const Header = memo(() => {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Button id="history" color="inherit" onClick={handleNavigation}>
-              Histórico
-              <span className={isActive('/history')} />
-            </Button>
-            <Button id="donate" color="inherit" onClick={handleNavigation}>
-              Doar(
-              {toOffer}
-              )
-              <span className={isActive('/donate')} />
-            </Button>
+            <HeaderItem path="/history" title="Histórico" />
+            <HeaderItem path="/donate" title={`Doar(${toOffer})`} />
             <Chip
               className={classes.profileContainer}
               label={`EZȻ ${balance}`}
