@@ -14,4 +14,13 @@ describe('testing header item component', () => {
     );
     expect(container).toMatchSnapshot();
   });
+
+  it('should renders with props as expected', () => {
+    const { container } = render(
+      <MemoryRouter>
+        <HeaderItem path="test" title="Test" />
+      </MemoryRouter>,
+    );
+    expect(container).toMatchSnapshot();
+  });
 });
