@@ -1,7 +1,8 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 import HeaderItem from '../HeaderItem';
 
@@ -22,5 +23,20 @@ describe('testing header item component', () => {
       </MemoryRouter>,
     );
     expect(container).toMatchSnapshot();
+  });
+
+  it('on press link should navigate to path', () => {
+    const history = createMemoryHistory();
+    const {
+      container: { firstChild },
+    } = render(
+      <Router history={history}>
+        <HeaderItem path="test" title="Test" />
+      </Router>,
+    );
+
+    fireEvent.click(firstChild);
+
+    expect(history.location.pathname).toBe('/test');
   });
 });
