@@ -28,6 +28,7 @@ const LOGIN = gql`
         name
         email
         avatar
+        isAdmin
         wallet {
           id
           toOffer

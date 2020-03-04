@@ -26,6 +26,7 @@ const USER = gql`
       name
       email
       avatar
+      isAdmin
       wallet {
         id
         toOffer
@@ -71,6 +72,7 @@ const Header = memo(() => {
     data: {
       user: {
         avatar,
+        isAdmin,
         wallet: { balance, toOffer },
       },
     },
@@ -106,6 +108,7 @@ const Header = memo(() => {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            {isAdmin && <HeaderItem path="/users" title="Usuários" />}
             <HeaderItem path="/history" title="Histórico" />
             <HeaderItem path="/donate" title={`Doar(${toOffer})`} />
             <Chip
