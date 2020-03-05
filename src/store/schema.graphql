@@ -42,6 +42,7 @@ type UserType {
     email: String
     hiredAt: String
     id: ID
+    isAdmin: Boolean
     name: String
     resignedAt: String
     wallet: WalletType
@@ -62,6 +63,8 @@ input AuthInputType {
 input DonationFilterType {
     maxDate: String
     minDate: String
+    receiverUserId: ID
+    senderUserId: ID
 }
 
 input DonationInputType {

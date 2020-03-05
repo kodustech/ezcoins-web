@@ -28,6 +28,7 @@ const LOGIN = gql`
         name
         email
         avatar
+        isAdmin
         wallet {
           id
           toOffer
@@ -113,7 +114,7 @@ const Login = memo(() => {
                 required
                 fullWidth
                 id="email"
-                label="E-mail"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 onChange={handleChange}
