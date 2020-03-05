@@ -2,14 +2,42 @@ import React, { memo, useCallback } from 'react';
 import { Avatar, Button, CircularProgress, Grid, TextField } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
 import { KeyboardDatePicker } from '@material-ui/pickers';
+import gql from 'graphql-tag/src';
+import { useMutation } from '@apollo/react-hooks';
+
 import useStyles from './useStyles';
+
+const CREATE_USER = gql`
+  mutation($input: UserInputType!) {
+    createUser(input: $input) {
+      id
+      name
+      email
+      avatar
+    }
+  }
+`;
 
 const User = memo(() => {
   const classes = useStyles();
 
-  const onSubmit = useCallback(() => {}, []);
+  const [createUser] = useMutation(CREATE_USER);
+
+  const onSubmit = useCallback(
+    async ({ cpf: password, ...values }, { setSubmitting, setErrors }) => {
+      try {
+        await createUser({
+          variables: { input: { password, passwordConfirmation: password, ...values } },
+        });
+        setSubmitting(false);
+      } catch ({ graphQLErrors: [{ details }] }) {
+        setErrors(details);
+        setSubmitting(false);
+      }
+    },
+    [createUser],
+  );
 
   const validationSchema = Yup.object().shape({
     avatar: Yup.string()
@@ -34,12 +62,15 @@ const User = memo(() => {
     handleChange,
     handleSubmit,
     isSubmitting,
-    values: { avatar },
+    setFieldValue,
+    values: { avatar, hiredAt },
   } = useFormik({
-    initialValues: {},
+    initialValues: { hiredAt: new Date() },
     onSubmit,
     validationSchema,
   });
+
+  const onChangeHiredAt = useCallback(value => setFieldValue('hiredAt', value), [setFieldValue]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -115,10 +146,13 @@ const User = memo(() => {
             </Grid>
             <Grid item xs={4}>
               <KeyboardDatePicker
+                name="hiredAt"
                 variant="inline"
                 inputVariant="outlined"
                 label="Contratado em"
                 format="dd/MM/yyyy"
+                onChange={onChangeHiredAt}
+                value={hiredAt}
                 style={{
                   marginTop: 16,
                 }}
