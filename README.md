@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/maykonmichel/ezcoins-api.svg?style=svg)](https://circleci.com/gh/maykonmichel/ezcoins-web)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
