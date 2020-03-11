@@ -1,5 +1,29 @@
 version: 2
 jobs:
+  build:
+    docker:
+      - image: circleci/node:10.17.0
+    working_directory: ~/web
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn build
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-build-{{ checksum "package.json" }}
+  deploy:
+    docker:
+      - image: circleci/node:10.17.0
+    working_directory: ~/web
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-build-{{ checksum "package.json" }}
+      - run: scp -o StrictHostKeyChecking=no -r ./build/* ezdevs@138.68.226.93:~/ezcoins/web
   install_dependencies:
     docker:
       - image: circleci/node:10.17.0
@@ -32,3 +56,19 @@ workflows:
       - test:
           requires:
             - install_dependencies
+  build_and_deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+      - deploy:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+          requires:
+            - deploy
