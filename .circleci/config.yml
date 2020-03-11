@@ -57,13 +57,13 @@ workflows:
             tags:
               ignore: /.*/
             branches:
-              ignore: /.*/
+              ignore: master
       - test:
           filters:
             tags:
               ignore: /.*/
             branches:
-              ignore: /.*/
+              ignore: master
           requires:
             - install_dependencies
   build_and_deploy:
