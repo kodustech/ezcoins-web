@@ -1,21 +1,17 @@
-version: 2.1
-orbs:
-  node: circleci/node@1.1.6
-  doctl: digitalocean/cli@1.0.0
+version: 2
 jobs:
   test:
-    executor:
-      name: node/default
+    docker:
+      - image: circleci/node:10.17.0
+    working_directory: ~/web
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
       - run: yarn test
-  doctl/install_and_initialize_cli:
-    context: myContext
-    executor: doctl/default
 workflows:
-    test:
-      jobs:
-        - test
+  version: 2
+  test:
+    jobs:
+      - test
