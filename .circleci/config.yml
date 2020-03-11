@@ -12,7 +12,7 @@ jobs:
       - run: yarn build
       - save_cache:
           paths:
-            - node_modules
+            - build
           key: v1-build-{{ checksum "package.json" }}
   deploy:
     docker:
