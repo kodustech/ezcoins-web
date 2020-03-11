@@ -71,4 +71,4 @@ workflows:
             branches:
               ignore: /.*/
           requires:
-            - deploy
+            - build
