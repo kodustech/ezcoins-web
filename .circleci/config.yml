@@ -58,7 +58,12 @@ workflows:
             - install_dependencies
   build_and_deploy:
     jobs:
-      - install_dependencies
+      - install_dependencies:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
       - build:
           filters:
             tags:
