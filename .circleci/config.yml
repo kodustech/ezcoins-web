@@ -1,5 +1,19 @@
 version: 2
 jobs:
+  install_dependencies:
+    docker:
+      - image: circleci/node:10.17.0
+    working_directory: ~/web
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
   test:
     docker:
       - image: circleci/node:10.17.0
@@ -14,4 +28,7 @@ workflows:
   version: 2
   test:
     jobs:
-      - test
+      - install_dependencies
+      - test:
+          requires:
+            - install_dependencies
