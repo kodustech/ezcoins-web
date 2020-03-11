@@ -13,6 +13,10 @@ import { Socket as PhoenixSocket } from 'phoenix';
 
 import resolvers from './resolvers';
 
+const { REACT_APP_API_URL, REACT_APP_USE_SSL } = process.env;
+
+const useSSL = REACT_APP_USE_SSL === 'true';
+
 export default () => {
   const [api, setApi] = useState(null);
 
@@ -32,12 +36,12 @@ export default () => {
     const retryLink = new RetryLink();
 
     const httpLink = createHttpLink({
-      uri: `http://${process.env.REACT_APP_API_URL}/graphql`,
+      uri: `${useSSL ? 'https' : 'http'}://${REACT_APP_API_URL}/graphql`,
     });
 
     const absintheSocketLink = createAbsintheSocketLink(
       AbsintheSocket.create(
-        new PhoenixSocket(`ws://${process.env.REACT_APP_API_URL}/socket`, {
+        new PhoenixSocket(`${useSSL ? 'wss' : 'ws'}://${REACT_APP_API_URL}/socket`, {
           params: () => ({ ...authorization() }),
         }),
       ),
