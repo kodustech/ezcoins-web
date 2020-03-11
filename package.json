@@ -1,6 +1,6 @@
 {
   "name": "ez_coins_web",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "dependencies": {
     "@absinthe/socket": "^0.2.1",
