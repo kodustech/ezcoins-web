@@ -52,8 +52,18 @@ workflows:
   version: 2
   test:
     jobs:
-      - install_dependencies
+      - install_dependencies:
+          filters:
+            tags:
+              ignore: /.*/
+            branches:
+              ignore: /.*/
       - test:
+          filters:
+            tags:
+              ignore: /.*/
+            branches:
+              ignore: /.*/
           requires:
             - install_dependencies
   build_and_deploy:
