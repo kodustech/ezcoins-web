@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## First steps
+You will need the API working. You can find it in [EzCoinsApi](https://github.com/maykonmichel/ezcoins-api).<br />
+Follow the steps and come here after.
+
+To start the front-end:
+* Create a .env file based on .env.example
+* Run `yarn start`
+
 ## Available Scripts
 
 In the project directory, you can run:
