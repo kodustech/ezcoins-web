@@ -5,14 +5,6 @@ export default makeStyles(theme => ({
     margin: theme.spacing(5),
     justifyContent: 'center',
   },
-  divider: {
-    width: 140,
-    height: 2,
-    background: 'black',
-    position: 'absolute',
-    left: 'calc(50% - 60px)',
-    marginTop: 8,
-  },
   title: {
     textAlign: 'center',
     fontSize: 22,
