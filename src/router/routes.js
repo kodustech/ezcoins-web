@@ -8,6 +8,7 @@ import Donate from '../pages/Donate';
 import History from '../pages/History';
 import Login from '../pages/Login';
 import RegisterUser from '../pages/Users';
+import Activities from '../pages/Activities';
 import WithAuth from '../hocs/WithAuth';
 
 const Routes = memo(() => {
@@ -43,6 +44,9 @@ const Routes = memo(() => {
           </WithAuthRoute>
           <WithAuthRoute path="/users">
             <RegisterUser />
+          </WithAuthRoute>
+          <WithAuthRoute path="/activities">
+            <Activities />
           </WithAuthRoute>
         </Switch>
       </div>

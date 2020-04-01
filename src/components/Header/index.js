@@ -109,6 +109,7 @@ const Header = memo(() => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {isAdmin && <HeaderItem path="/users" title="Usuários" />}
+            <HeaderItem path="/activities" title="Atividades" />
             <HeaderItem path="/history" title="Histórico" />
             <HeaderItem path="/donate" title={`Doar(${toOffer})`} />
             <Chip
